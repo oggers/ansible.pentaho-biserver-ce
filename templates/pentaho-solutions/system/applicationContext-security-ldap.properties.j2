@@ -1,0 +1,30 @@
+# {{ ansible_managed }}
+
+contextSource.providerUrl={{ pentahobi_ldap_server_url }}/{{ pentahobi_ldap_base_dn }}
+contextSource.userDn={{ pentahobi_ldap_bind_dn }}
+contextSource.password={{ pentahobi_ldap_bind_pass }}
+
+userSearch.searchBase={{ pentahobi_ldap_people_base }}
+userSearch.searchFilter={{ pentahobi_ldap_people_filter }}
+
+populator.convertToUpperCase=false
+populator.groupRoleAttribute=cn
+populator.groupSearchBase={{ pentahobi_ldap_groups_base }}
+populator.groupSearchFilter=(&(member\={0}){{ pentahobi_ldap_groups_filter }})
+populator.rolePrefix=
+populator.searchSubtree=true
+
+allUsernamesSearch.usernameAttribute=sAMAccountName
+allUsernamesSearch.searchBase={{ pentahobi_ldap_people_base }}
+allUsernamesSearch.searchFilter=(objectCategory=person)
+# 0 = base; 1 = one; 2 = sub
+allUsernamesSearch.scope=2
+
+allAuthoritiesSearch.roleAttribute=cn
+allAuthoritiesSearch.searchBase={{ pentahobi_ldap_groups_base }}
+allAuthoritiesSearch.searchFilter=(&(objectCategory=group){{ pentahobi_ldap_groups_filter }})
+# 0 = base; 1 = one; 2 = sub
+allAuthoritiesSearch.scope=2
+
+adminRole=cn={{ pentahobi_ldap_admin_role }},{{ pentahobi_ldap_people_base }}
+adminUser={{ pentahobi_ldap_admin_user }}

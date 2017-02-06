@@ -1,0 +1,24 @@
+---
+# file: pentaho.biserver/meta/main.yml
+galaxy_info:
+  author: Juan Carlos Coruña
+  company:
+  description: Deploy Pentaho BI server CE.
+  license: MIT
+  min_ansible_version: 1.8
+  platforms:
+    - name: Ubuntu
+  categories:
+    - web
+
+#dependencies:
+#  - role: tomcat
+#    tomcat_name: "{{ pentahobi_name }}"
+#    tomcat_user: "{{ pentahobi_user }}"
+#    tomcat_group: "{{ pentahobi_group }}"
+#    tomcat_port: "{{ pentahobi_http_port }}"
+#    tomcat_base_dir: "{{ pentahobi_base_dir }}"
+#    tomcat_extra_jars: ['jdbc-postgresql']
+#    tomcat_global_resources: "{{ _default_jndi_resources + pentahobi_jndi_resources }}"
+#    tomcat_rc_depend:
+#      use: postgresql

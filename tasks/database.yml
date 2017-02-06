@@ -1,0 +1,32 @@
+---
+# file: pentaho.biserver/tasks/database.yml
+- name: create database user
+  delegate_to: "{{ pentahobi_db_delegate_to }}"
+  become_user: postgres
+  postgresql_user: >
+    name="{{ pentahobi_db_user }}"
+    password="{{ pentahobi_db_pass }}"
+  tags: accounts
+
+- name: create databases
+  delegate_to: "{{ pentahobi_db_delegate_to }}"
+  become_user: postgres
+  postgresql_db: >
+    name={{ item }}
+    owner={{ pentahobi_db_user }}
+    encoding=UTF-8
+  register: createdb_result
+  with_items:
+    - "{{ pentahobi_db_qrtz_name }}"
+    - "{{ pentahobi_db_hib_name }}"
+    - "{{ pentahobi_db_jcr_name }}"
+
+- name: copy quartz file
+  template: src=quartz_init.pg.sql.j2 dest=/tmp/quartz_init.pg.sql
+  when: createdb_result | changed
+
+- name: initialize database for quartz
+  delegate_to: "{{ pentahobi_db_delegate_to }}"
+  become_user: postgres
+  shell: psql --host="{{ pentahobi_db_host }}" --port="{{ pentahobi_db_port }}" --dbname="{{ pentahobi_db_qrtz_name }}" < /tmp/quartz_init.pg.sql
+  when: createdb_result | changed

@@ -1,0 +1,50 @@
+---
+# File: pentaho.biserver/tasks/main.yml
+#- name: install PostgreSQL JDBC driver
+#  apt: name=libpostgresql-jdbc-java state=present
+#  tags: packages
+
+- name: Add Java oracle repository to sources
+  apt_repository: repo='ppa:webupd8team/java'
+  register: java_repository
+  
+- name: Autoaccept license for java
+  shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+  when: java_repository.changed
+
+- name: Update apt package cache
+  apt: update_cache=yes
+
+- name: Install Java 8
+  apt: name=oracle-java8-installer state=latest install_recommends=yes
+
+- name: set java 8 env
+  apt: name=oracle-java8-set-default state=latest install_recommends=yes
+
+- name: Check if already deployed
+  command: "test -e {{ pentahobi_base_dir }}/start-pentaho.sh"
+  register: _check_result
+  failed_when: false
+  changed_when: false
+
+- include: deploy.yml
+  when: _check_result.rc != 0
+
+- include: configure.yml
+  tags: config
+
+- include: database.yml
+  tags: database
+
+- name: config systemd
+  template: >
+    src=pentaho.service.j2
+    dest=/lib/systemd/system/pentaho.service
+    owner=root
+    group=root
+    mode=644
+  register: pentaho_systemd
+    
+- name: enable systemd
+  command: systemctl enable /lib/systemd/system/pentaho.service
+  when: pentaho_systemd.changed
