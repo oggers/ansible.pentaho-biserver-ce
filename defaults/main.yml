@@ -1,15 +1,20 @@
 ---
 # file: pentaho.biserver/defaults/main.yml
 
-# Name of this Pentaho BI instance.
-pentahobi_name: pentaho-bi
-
 # Version to install.
 pentahobi_version: 7.0.0.0-25
 #pentahobi_version: 6.1.0.1-196
 
+pentahobi_major_version: "{{ '.'.join(pentahobi_version.split('.')[0:2]) }}"
+
 # URL of the distribution package to download.
-pentahobi_pkg_url: "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/{{ '.'.join(pentahobi_version.split('.')[0:2]) }}/pentaho-server-ce-{{ pentahobi_version }}.zip"
+pentahobi_pkg_url_version: {
+  "6.1.0.1-196": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/6.1/biserver-ce-6.1.0.1-196.zip",
+  "7.0.0.0-25": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/7.0/pentaho-server-ce-7.0.0.0-25.zip"}
+pentahobi_pkg_url: "{{ pentahobi_pkg_url_version[pentahobi_version] }}"
+
+# Name of this Pentaho BI instance.
+pentahobi_name: "pentaho-bi-{{ pentahobi_major_version }}"
 
 # User to create that will run the Pentaho BI instance.
 pentahobi_user: pentaho

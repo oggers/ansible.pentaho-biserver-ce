@@ -51,8 +51,6 @@
     group={{ pentahobi_group }}
   with_items:
     - smtp-email/email_config.xml
-    - applicationContext-security-ldap.properties
-    #- applicationContext-spring-security-ldap.xml
     - mondrian/mondrian.properties
     - repository.spring.properties
     - applicationContext-spring-security.xml
@@ -61,6 +59,16 @@
     - importExport.xml
     - security.properties
 #  notify: restart tomcat
+
+- name: Copy ldap configuration files
+  template: >
+    src=pentaho-solutions/system/{{ item }}.j2
+    dest={{ pentahobi_solution_path }}/system/{{ item }}
+    owner={{ pentahobi_user }}
+    group={{ pentahobi_group }}
+  with_items:
+    - applicationContext-security-ldap.properties
+  when: pentahobi_auth_provider == 'ldap'
 
 - name: Set jndi
   template: >
@@ -76,3 +84,4 @@
     owner="{{ pentahobi_user }}"
     group="{{ pentahobi_group }}"
   with_items: "{{ pentahobi_jdbc_drivers }}"
+  when: "pentahobi_jdbc_drivers is defined"
