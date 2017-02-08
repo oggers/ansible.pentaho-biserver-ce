@@ -1,0 +1,7 @@
+---
+# file: handlers/main.yml
+
+- name: restart pentaho
+  service:
+    name: "pentaho-{{ pentahobi_major_version }}"
+    state: restarted

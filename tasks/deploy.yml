@@ -33,7 +33,7 @@
   patch: >
     src={{ _tmp.path }}/PUCLogin.jsp.patch
     remote_src=True
-    dest={{ _tmp.path }}/pentaho-server/tomcat/webapps/pentaho/jsp/PUCLogin.jsp
+    dest={{ _tmp.path }}/{{ pentahobi_extract_dir }}/tomcat/webapps/pentaho/jsp/PUCLogin.jsp
 
 #- name: patch pentaho-spring-beans.xml to remove useless imports
 #  patch: >
@@ -85,7 +85,7 @@
 
 - name: copy pentaho-solutions directory
   command: >
-    mv {{ _tmp.path }}/pentaho-server {{ pentahobi_base_dir }}/
+    mv {{ _tmp.path }}/{{ pentahobi_extract_dir }} {{ pentahobi_base_dir }}/
 
 - name: fix files permissions
   file: >

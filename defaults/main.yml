@@ -13,6 +13,10 @@ pentahobi_pkg_url_version: {
   "7.0.0.0-25": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/7.0/pentaho-server-ce-7.0.0.0-25.zip"}
 pentahobi_pkg_url: "{{ pentahobi_pkg_url_version[pentahobi_version] }}"
 
+pentahobi_extract_dir: {
+  "6.1.0.1-196": "biserver-ce",
+  "7.0.0.0-25": "pentaho-server"}
+
 # Name of this Pentaho BI instance.
 pentahobi_name: "pentaho-bi-{{ pentahobi_major_version }}"
 
@@ -61,28 +65,32 @@ tomcat_perm_size: 256
 # Databases
 #
 
+# Repository type: mysql, oracle, postgresql, sqlserver, filesystem
+pentahobi_repository_type: postgresql
+
 # Address of the PostgreSQL instance.
 pentahobi_db_host: localhost
 
 # Port number of the PostgreSQL instance.
+# mysql -> 3306, oracle -> 1521, postgresql -> 5432, sqlserver -> 1433
 pentahobi_db_port: 5432
 
 # Name of the database user for Pentaho databases. May be overridden for
 # particular databases (see below).
-pentahobi_db_user: "{{ pentahobi_name }}"
+pentahobi_db_user: "{{ pentahobi_name | regex_replace('\\.', '_') }}"
 
 # Password of the database user for Pentaho databases. May be overridden for
 # particular databases (see below).
 pentahobi_db_pass: pentaho
 
 # Name of the database for Audit etc.
-pentahobi_db_hib_name: "{{ pentahobi_name }}_hib"
+pentahobi_db_hib_name: "{{ pentahobi_name | regex_replace('\\.', '_') }}_hib"
 
 # Name of the database for Quartz scheduler.
-pentahobi_db_qrtz_name: "{{ pentahobi_name }}_quartz"
+pentahobi_db_qrtz_name: "{{ pentahobi_name | regex_replace('\\.', '_') }}_quartz"
 
 # Name of the database for Jackrabbit.
-pentahobi_db_jcr_name: "{{ pentahobi_name }}_jcr"
+pentahobi_db_jcr_name: "{{ pentahobi_name | regex_replace('\\.', '_') }}_jcr"
 
 # Should not be changed.
 pentahobi_db_delegate_to: "{{ pentahobi_db_host | replace('localhost', inventory_hostname) | replace('127.0.0.1', inventory_hostname) }}"

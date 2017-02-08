@@ -19,8 +19,8 @@
 #     - jackrabbit
 
 - name: copy jackrabbit repository config file
-  copy: >
-    src=system/jackrabbit/repository.xml
+  template: >
+    src=pentaho-solutions/system/jackrabbit/repository.{{ pentahobi_version}}.xml.j2
     dest={{ pentahobi_solution_path }}/system/jackrabbit/repository.xml
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
@@ -30,18 +30,31 @@
   file: path="{{ pentahobi_solution_path }}/system/jackrabbit/repository/*" state=absent
   when: jcr_repository.changed
 
-- name: copy configuration files
-  copy: >
-    src=system/{{ item }}
+- name: hibernate configuration files
+  template: >
+    src=pentaho-solutions/system/{{ item }}.j2
     dest={{ pentahobi_solution_path }}/system/{{ item }}
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
   with_items:
-    #    - applicationContext-spring-security-jdbc.xml
-    - hibernate/hibernate-settings.xml
-    - hibernate/postgresql.jndi.hibernate.cfg.xml
-    # - karaf/etc/pentaho.marketplace.ba.cfg
-  notify: restart tomcat
+  - hibernate/hibernate-settings.xml
+  - hibernate/mysql5.hibernate.cfg.xml
+  - hibernate/oracle10g.hibernate.cfg.xml
+  - hibernate/postgresql.hibernate.cfg.xml
+  - hibernate/sqlserver.hibernate.cfg.xml
+  - hibernate/hsql.hibernate.cfg.xml
+  notify: restart pentaho
+
+# - name: copy configuration files
+#   copy: >
+#     src=system/{{ item }}
+#     dest={{ pentahobi_solution_path }}/system/{{ item }}
+#     owner={{ pentahobi_user }}
+#     group={{ pentahobi_group }}
+#   with_items:
+#     #    - applicationContext-spring-security-jdbc.xml
+#     # - karaf/etc/pentaho.marketplace.ba.cfg
+#   notify: restart pentaho
 
 - name: copy configuration files
   template: >
