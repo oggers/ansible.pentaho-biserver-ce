@@ -8,6 +8,12 @@
     password="{{ pentahobi_db_pass }}"
   tags: accounts
 
+- name: for now limited to postgresql
+  assert:
+    that:
+      - "pentahobi_repository_type == 'postgresql'"
+    msg: "for now limited to postgresql repository type"
+
 - name: create databases
   delegate_to: "{{ pentahobi_db_delegate_to }}"
   become_user: postgres
@@ -20,6 +26,7 @@
     - "{{ pentahobi_db_qrtz_name }}"
     - "{{ pentahobi_db_hib_name }}"
     - "{{ pentahobi_db_jcr_name }}"
+  when: pentahobi_repository_type == 'postgresql'
 
 - name: copy quartz file
   template: src=quartz_init.pg.sql.j2 dest=/tmp/quartz_init.pg.sql

@@ -2,7 +2,7 @@
 # file: pentaho.biserver/tasks/configure.yml
 - name: replace pentaho/WEB-INF/web.xml and log4j.xml
   template: >
-    src=tomcat/{{ item }}.j2
+    src={{ pentahobi_version }}/tomcat/{{ item }}.j2
     dest={{ pentahobi_tomcat_path }}/{{ item }}
   with_items:
     - webapps/pentaho/WEB-INF/classes/log4j.xml
@@ -20,11 +20,12 @@
 
 - name: copy jackrabbit repository config file
   template: >
-    src=pentaho-solutions/system/jackrabbit/repository.{{ pentahobi_version}}.xml.j2
+    src={{ pentahobi_version }}/pentaho-solutions/system/jackrabbit/repository.xml.j2
     dest={{ pentahobi_solution_path }}/system/jackrabbit/repository.xml
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
   register: jcr_repository
+  notify: restart pentaho
 
 - name: Clear old repository
   file: path="{{ pentahobi_solution_path }}/system/jackrabbit/repository/*" state=absent
@@ -32,7 +33,7 @@
 
 - name: hibernate configuration files
   template: >
-    src=pentaho-solutions/system/{{ item }}.j2
+    src={{ pentahobi_version }}/pentaho-solutions/system/{{ item }}.j2
     dest={{ pentahobi_solution_path }}/system/{{ item }}
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
@@ -58,7 +59,7 @@
 
 - name: copy configuration files
   template: >
-    src=pentaho-solutions/system/{{ item }}.j2
+    src={{ pentahobi_version }}/pentaho-solutions/system/{{ item }}.j2
     dest={{ pentahobi_solution_path }}/system/{{ item }}
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
@@ -71,24 +72,26 @@
     - ImportHandlerMimeTypeDefinitions.xml
     - importExport.xml
     - security.properties
-#  notify: restart tomcat
+  notify: restart pentaho
 
 - name: Copy ldap configuration files
   template: >
-    src=pentaho-solutions/system/{{ item }}.j2
+    src={{ pentahobi_version }}/pentaho-solutions/system/{{ item }}.j2
     dest={{ pentahobi_solution_path }}/system/{{ item }}
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
   with_items:
     - applicationContext-security-ldap.properties
   when: pentahobi_auth_provider == 'ldap'
+  notify: restart pentaho
 
 - name: Set jndi
   template: >
-    src=tomcat/webapps/pentaho/META-INF/context.xml.j2
+    src={{ pentahobi_version }}/tomcat/webapps/pentaho/META-INF/context.xml.j2
     dest={{ pentahobi_tomcat_path }}/webapps/pentaho/META-INF/context.xml
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
+  notify: restart pentaho
 
 - name: Copy jdbc drivers
   copy:
@@ -98,3 +101,12 @@
     group="{{ pentahobi_group }}"
   with_items: "{{ pentahobi_jdbc_drivers }}"
   when: "pentahobi_jdbc_drivers is defined"
+  notify: restart pentaho
+
+- name: Copy tomcat/conf/server.xml configuration files
+  template: >
+    src={{ pentahobi_version }}/tomcat/conf/server.xml.j2
+    dest={{ pentahobi_tomcat_path }}/conf/server.xml
+    owner={{ pentahobi_user }}
+    group={{ pentahobi_group }}
+  notify: restart pentaho

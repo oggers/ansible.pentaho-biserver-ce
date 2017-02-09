@@ -39,7 +39,7 @@
 
 - name: config systemd
   template: >
-    src=pentaho.service.j2
+    src={{ pentahobi_version }}/pentaho.service.j2
     dest=/lib/systemd/system/pentaho-{{ pentahobi_major_version }}.service
     owner=root
     group=root

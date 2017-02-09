@@ -6,21 +6,21 @@
   * This setting allows the deployment to specify where to find the
   * database-specific hibernate configuration.
   -->
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
   <config-file>system/hibernate/mysql5.hibernate.cfg.xml</config-file>
-<% endif %>
-<% if pentahobi_repository_type == 'oracle' %>
+{% endif %}
+{% if pentahobi_repository_type == 'oracle' %}
   <config-file>system/hibernate/oracle10g.hibernate.cfg.xml</config-file>
-<% endif %>
-<% if pentahobi_repository_type == 'postgresql' %>
-  <config-file>system/hibernate/postgresql.jndi.hibernate.cfg.xml</config-file>
-<% endif %>
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% endif %}
+{% if pentahobi_repository_type == 'postgresql' %}
+  <config-file>system/hibernate/postgresql.hibernate.cfg.xml</config-file>
+{% endif %}
+{% if pentahobi_repository_type == 'sqlserver' %}
   <config-file>system/hibernate/sqlserver.hibernate.cfg.xml</config-file>
-<% endif %>
-<% if pentahobi_repository_type == 'filesystem' %>
+{% endif %}
+{% if pentahobi_repository_type == 'filesystem' %}
   <config-file>system/hibernate/hsql.hibernate.cfg.xml</config-file>
-<% endif %>
+{% endif %}
   <!--
   * managed should be set to true if running the BI Platform
   * in a managed environment (like JBoss, Orion, etc). In this configuration,

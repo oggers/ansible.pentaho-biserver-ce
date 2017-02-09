@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- {{ ansible_managed }} -->
+<tns:ImportHandlerMimeTypeDefinitions xmlns:tns="http://www.pentaho.com/schema/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.pentaho.com/schema/ImportHandlerMimeTypeDefinitions.xsd ">
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.RepositoryFileImportFileHandler">
+    <MimeTypeDefinitions>
+{% for mimeTypeDef in (pentahobi_default_repository_file_import_extensions|list + pentahobi_repository_file_import_extensions|default([])|list)|groupby('mimeType') %}
+      <MimeTypeDefinition mimeType="{{ mimeTypeDef.grouper }}"{{ {'hidden': None if mimeTypeDef.list[0].hidden is undefined else 'true' if mimeTypeDef.list[0].hidden else 'false', 'converter': mimeTypeDef.list[0].converter, 'locale': None if mimeTypeDef.list[0].locale is undefined else 'true' if mimeTypeDef.list[0].locale else 'false'}|xmlattr }}>
+{% for mtd in mimeTypeDef.list %}
+{% for ext in mtd.extensions %}
+        <extension>{{ ext }}</extension>
+{% endfor %}
+{% endfor %}
+      </MimeTypeDefinition>
+{% endfor %}
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.SolutionImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.solution-repository">
+        <extension>zip</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="com.pentaho.repository.importexport.PDIImportFileHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.job" converter="PDIJobStreamConverter" hidden="true" versionEnabled="true" versionCommentEnabled="true">
+        <extension>kjb</extension>
+      </MimeTypeDefinition>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.transformation" converter="PDITransformationStreamConverter" hidden="true" versionEnabled="true" versionCommentEnabled="true">
+        <extension>ktr</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.MondrianImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.mondrian+xml">
+        <extension>mondrian+xml</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.XActionImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.xaction">
+        <extension>xaction</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.LocaleImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="text/locale" hidden="true">
+        <extension>locale</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.MetadataImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="text/xmi+xml">
+        <extension>xmi</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+  
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.PRPTImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.reporting.classic">
+        <extension>prpt</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.RepositoryFileImportFileHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.prptstyle+xml" hidden="true">
+        <extension>prptstyle</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+
+  <ImportHandler class="org.pentaho.platform.plugin.services.importer.MetaStoreImportHandler">
+    <MimeTypeDefinitions>
+      <MimeTypeDefinition mimeType="application/vnd.pentaho.metastore">
+        <extension>mzip</extension>
+      </MimeTypeDefinition>
+    </MimeTypeDefinitions>
+  </ImportHandler>
+
+</tns:ImportHandlerMimeTypeDefinitions>

@@ -103,14 +103,35 @@ pentahobi_jndi_resources: []
 #
 
 # Address of the SMTP server for sending e-mails.
-pentahobi_smtp_host: "{{ smtp_host | default('localhost') }}"
+pentahobi_mail_smtp_host: "{{ smtp_host | default('localhost') }}"
 
 # Port number of the SMTP server for sending e-mails.
-pentahobi_smtp_port: "{{ smtp_port | default('25') }}"
+pentahobi_mail_smtp_port: "{{ smtp_port | default('25') }}"
+
+# Transport for accessing the email server. Usually this is smtp. For GMail this is smtps
+pentahobi_mail_transport_protocol: smtp
+
+# Usually this is 'false'. For GMail it is 'true'
+pentahobi_mail_starttls: false
+
+# Set this to true if the email server requires the sender to authenticate
+pentahobi_mail_auth: false
+
+# This is true if the email server requires an SSL connection
+pentahobi_mail_ssl: false
+
+# For GMail this is false
+pentahobi_mail_quitwait: true
 
 # The default 'from' address that e-mails from the Pentaho BI will appear to
 # come from (e.g. joe.pentaho@pentaho.org).
-pentahobi_smtp_default_from: "{{ smtp_noreply | default('no-reply@example.org') }}"
+pentahobi_mail_default_from: "{{ smtp_noreply | default('no-reply@example.org') }}"
+
+# The user id used to connect to the email server for sending email. Only if auth is set to true
+pentahobi_mail_userid:
+
+# The password user to connect to the email server for sending email. Only if auth is set to true
+pentahobi_mail_pass:
 
 #
 # LDAP
@@ -170,75 +191,83 @@ pentahobi_mondrian_log_sql: true
 
 # default values do not modify
 pentahobi_default_repository_file_import_extensions:
-  - mimeType: "application/internet-shortcut"
-    converter: "streamConverter"
-    hidden: false
-    locale: false
-    extensions:
-      - url
-  - mimeType: "application/vnd.ms-excel"
-    extensions:
-      - xls
-  - mimeType: "application/vnd.pentaho.analyzer"
-    extensions:
-      - xanalyzer
-  - mimeType: "application/vnd.pentaho.dashboard"
-    extensions:
-      - xdash
-  - mimeType: "application/vnd.pentaho.schedule"
-    extensions:
-      - qtz
-  - mimeType: "image/gif"
-    hidden: true
-    extensions:
-      - gif
-  - mimeType: "image/jpeg"
-    hidden: true
-    extensions:
-      - jpg
-  - mimeType: "image/png"
-    hidden: true
-    extensions:
-      - png
-  - mimeType: "image/svg+xml"
-    hidden: true
-    extensions:
-      - svg
-  - mimeType: "text/css"
-    hidden: true
-    extensions:
-      - css
-  - mimeType: "text/html"
-    hidden: true
-    extensions:
-      - htm
-      - html
-  - mimeType: "text/javascript"
-    hidden: true
-    extensions:
-      - js
-  - mimeType: "text/plain"
-    hidden: true
-    extensions:
-      - properties
-      - sql
-  - mimeType: "text/pdf"
-    hidden: false
-    extensions:
-      - pdf
-  - mimeType: "text/xml"
-    extensions:
-      - cda
-      - cdfde
-      - jrxml
-      - kcs
-      - kdb
-      - kps
-      - ksl
-      - report
-      - rptdesign
-      - wcdf
-      - xcdf
-      - xjpivot
-      - xml
-      - xreportspec
+- mimeType: "application/internet-shortcut"
+  converter: "streamConverter"
+  hidden: false
+  locale: false
+  extensions:
+  - url
+- mimeType: "application/vnd.ms-excel"
+  extensions:
+  - xls
+- mimeType: "application/vnd.pentaho.analyzer"
+  extensions:
+  - xanalyzer
+- mimeType: "application/vnd.pentaho.dashboard"
+  extensions:
+  - xdash
+- mimeType: "application/vnd.pentaho.schedule"
+  extensions:
+  - qtz
+- mimeType: "image/gif"
+  hidden: true
+  extensions:
+  - gif
+- mimeType: "image/jpeg"
+  hidden: true
+  extensions:
+  - jpg
+- mimeType: "image/png"
+  hidden: true
+  extensions:
+  - png
+- mimeType: "image/svg+xml"
+  hidden: true
+  extensions:
+  - svg
+- mimeType: "text/css"
+  hidden: true
+  extensions:
+  - css
+- mimeType: "text/html"
+  hidden: true
+  extensions:
+  - htm
+  - html
+- mimeType: "text/javascript"
+  hidden: true
+  extensions:
+  - js
+- mimeType: "text/plain"
+  hidden: true
+  extensions:
+  - properties
+  - sql
+- mimeType: "text/pdf"
+  hidden: false
+  extensions:
+  - pdf
+- mimeType: "text/xml"
+  extensions:
+  - cda
+  - cdfde
+  - cfg.xml
+  - jrxml
+  - kcs
+  - kdb
+  - kps
+  - ksl
+  - report
+  - rptdesign
+  - wcdf
+  - xcdf
+  - xjpivot
+  - xml
+  - xreportspec
+- mimeType: "application/octet-stream"
+  hidden: false
+  extensions:
+  - eml
+
+# Custom ctools components
+pentahobi_ctools_components:

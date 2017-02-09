@@ -40,7 +40,7 @@
     documentation for further explanation.
   -->
 
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
   <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
     <param name="driver" value="com.mysql.jdbc.Driver"/>
     <param name="url" value="jdbc:mysql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -49,9 +49,9 @@
     <param name="schema" value="mysql"/>
     <param name="schemaObjectPrefix" value="fs_repos_"/>
   </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'oracle' %>
+{% if pentahobi_repository_type == 'oracle' %}
   <FileSystem class="org.apache.jackrabbit.core.fs.db.OracleFileSystem">
     <param name="url" value="jdbc:oracle:thin:@{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/XE"/>
     <param name="user" value="{{ pentahobi_db_user }}"/>
@@ -59,9 +59,9 @@
     <param name="schemaObjectPrefix" value="fs_repos_"/>
     <param name="tablespace" value="pentaho_tablespace"/>
   </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'postgresql' %>
+{% if pentahobi_repository_type == 'postgresql' %}
   <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
     <param name="driver" value="org.postgresql.Driver"/>
     <param name="url" value="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -70,9 +70,9 @@
     <param name="schema" value="postgresql"/>
     <param name="schemaObjectPrefix" value="fs_repos_"/>
   </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% if pentahobi_repository_type == 'sqlserver' %}
   <FileSystem class="org.apache.jackrabbit.core.fs.db.MSSqlFileSystem">
     <param name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
     <param name="url" value="jdbc:sqlserver://{{ pentahobi_db_host }}:{{ pentahobi_db_port }};DatabaseName={{ pentahobi_db_jcr_name }}"/>
@@ -81,13 +81,13 @@
     <param name="schema" value="mssql"/>
     <param name="schemaObjectPrefix" value="fs_repos_"/>
   </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'filesystem' %>
+{% if pentahobi_repository_type == 'filesystem' %}
   <FileSystem class="org.apache.jackrabbit.core.fs.local.LocalFileSystem">
      <param name="path" value="${rep.home}/repository"/>
   </FileSystem>
-<% endif %>
+{% endif %}
 
   <!--
     data store configuration
@@ -101,7 +101,7 @@
     documentation for further explanation.
   -->
 
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
   <DataStore class="org.apache.jackrabbit.core.data.db.DbDataStore">
     <param name="url" value="jdbc:mysql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
     <param name="user" value="{{ pentahobi_db_user }}"/>
@@ -114,9 +114,9 @@
     <param name="tablePrefix" value=""/>
     <param name="schemaObjectPrefix" value="ds_repos_"/>
   </DataStore>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'oracle' %>
+{% if pentahobi_repository_type == 'oracle' %}
   <DataStore class="org.apache.jackrabbit.core.data.db.DbDataStore">
     <param name="url" value="jdbc:oracle:thin:@{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/XE"/>
     <param name="driver" value="oracle.jdbc.OracleDriver"/>
@@ -129,9 +129,9 @@
     <param name="tablePrefix" value=""/>
     <param name="schemaObjectPrefix" value="ds_repos_"/>
   </DataStore>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'postgresql' %>
+{% if pentahobi_repository_type == 'postgresql' %}
   <DataStore class="org.apache.jackrabbit.core.data.db.DbDataStore">
     <param name="url" value="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
     <param name="driver" value="org.postgresql.Driver"/>
@@ -144,9 +144,9 @@
     <param name="tablePrefix" value=""/>
     <param name="schemaObjectPrefix" value="ds_repos_"/>
   </DataStore>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% if pentahobi_repository_type == 'sqlserver' %}
   <DataStore class="org.apache.jackrabbit.core.data.db.DbDataStore">
     <param name="url" value="jdbc:sqlserver://{{ pentahobi_db_host }}:{{ pentahobi_db_port }};DatabaseName={{ pentahobi_db_jcr_name }}"/>
     <param name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
@@ -159,10 +159,11 @@
     <param name="tablePrefix" value=""/>
     <param name="schemaObjectPrefix" value="ds_repos_"/>
   </DataStore>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'filesystem' %>
+{% if pentahobi_repository_type == 'filesystem' %}
   <DataStore class="org.apache.jackrabbit.core.data.FileDataStore"/>
+{% endif %}
 
   <!--
       security configuration
@@ -230,7 +231,7 @@
       documentation for further explanation.
     -->
 
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
       <param name="driver" value="com.mysql.jdbc.Driver"/>
       <param name="url" value="jdbc:mysql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -239,9 +240,9 @@
       <param name="schema" value="mysql"/>
       <param name="schemaObjectPrefix" value="fs_ws_"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'oracle' %>
+{% if pentahobi_repository_type == 'oracle' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.OracleFileSystem">
       <param name="url" value="jdbc:oracle:thin:@{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/XE"/>
       <param name="user" value="{{ pentahobi_db_user }}"/>
@@ -249,9 +250,9 @@
       <param name="schemaObjectPrefix" value="fs_ws_"/>
       <param name="tablespace" value="pentaho_tablespace"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'postgresql' %>
+{% if pentahobi_repository_type == 'postgresql' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
       <param name="driver" value="org.postgresql.Driver"/>
       <param name="url" value="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -260,9 +261,9 @@
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="fs_ws_"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% if pentahobi_repository_type == 'sqlserver' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.MSSqlFileSystem">
       <param name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
       <param name="url" value="jdbc:sqlserver://{{ pentahobi_db_host }}:{{ pentahobi_db_port }};DatabaseName={{ pentahobi_db_jcr_name }}"/>
@@ -271,13 +272,13 @@
       <param name="schema" value="mssql"/>
       <param name="schemaObjectPrefix" value="fs_ws_"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'filesystem' %>
+{% if pentahobi_repository_type == 'filesystem' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.local.LocalFileSystem">
       <param name="path" value="${wsp.home}"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
 
     <!--
@@ -292,7 +293,7 @@
           NOTE: The database must be pre-created in and match the parameters.  See Jackrabbit
           documentation for further explanation.
         -->
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.MySqlPersistenceManager">
       <param name="driver" value="com.mysql.jdbc.Driver"/>
       <param name="url" value="jdbc:mysql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -301,9 +302,9 @@
       <param name="schema" value="mysql"/>
       <param name="schemaObjectPrefix" value="${wsp.name}_pm_ws_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'oracle' %>
+{% if pentahobi_repository_type == 'oracle' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.OraclePersistenceManager">
       <param name="url" value="jdbc:oracle:thin:@{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/XE"/>
       <param name="driver" value="oracle.jdbc.OracleDriver"/>
@@ -313,9 +314,9 @@
       <param name="schemaObjectPrefix" value="${wsp.name}_pm_ws_"/>
       <param name="tablespace" value="pentaho_tablespace"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'postgresql' %>
+{% if pentahobi_repository_type == 'postgresql' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.PostgreSQLPersistenceManager">
       <param name="url" value="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
       <param name="driver" value="org.postgresql.Driver"/>
@@ -324,9 +325,9 @@
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="${wsp.name}_pm_ws_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% if pentahobi_repository_type == 'sqlserver' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.MSSqlPersistenceManager">
       <param name="url" value="jdbc:sqlserver://{{ pentahobi_db_host }}:{{ pentahobi_db_port }};DatabaseName={{ pentahobi_db_jcr_name }}"/>
       <param name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
@@ -335,14 +336,14 @@
       <param name="schema" value="mssql"/>
       <param name="schemaObjectPrefix" value="${wsp.name}_pm_ws_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'filesystem' %>
+{% if pentahobi_repository_type == 'filesystem' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.pool.H2PersistenceManager">
       <param name="url" value="jdbc:h2:${wsp.home}/db"/>
       <param name="schemaObjectPrefix" value="${wsp.name}_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
     <!--
         Search index and the file system it uses.
@@ -376,7 +377,7 @@
           NOTE: The database must be pre-created in and match the parameters.  See Jackrabbit
           documentation for further explanation.
         -->
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
       <param name="driver" value="com.mysql.jdbc.Driver"/>
       <param name="url" value="jdbc:mysql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -385,9 +386,9 @@
       <param name="schema" value="mysql"/>
       <param name="schemaObjectPrefix" value="fs_ver_"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'oracle' %>
+{% if pentahobi_repository_type == 'oracle' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.OracleFileSystem">
       <param name="url" value="jdbc:oracle:thin:@{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/XE"/>
       <param name="user" value="{{ pentahobi_db_user }}"/>
@@ -395,9 +396,9 @@
       <param name="schemaObjectPrefix" value="fs_ver_"/>
       <param name="tablespace" value="pentaho_tablespace"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'postgresql' %>
+{% if pentahobi_repository_type == 'postgresql' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
       <param name="driver" value="org.postgresql.Driver"/>
       <param name="url" value="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -406,9 +407,9 @@
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="fs_ver_"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% if pentahobi_repository_type == 'sqlserver' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.db.MSSqlFileSystem">
       <param name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
       <param name="url" value="jdbc:sqlserver://{{ pentahobi_db_host }}:{{ pentahobi_db_port }};DatabaseName={{ pentahobi_db_jcr_name }}"/>
@@ -417,13 +418,13 @@
       <param name="schema" value="mssql"/>
       <param name="schemaObjectPrefix" value="fs_ver_"/>
     </FileSystem>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'filesystem' %>
+{% if pentahobi_repository_type == 'filesystem' %}
     <FileSystem class="org.apache.jackrabbit.core.fs.local.LocalFileSystem">
       <param name="path" value="${rep.home}/version" />
     </FileSystem>
-<% endif %>
+{% endif %}
 
     <!--
         Configures the persistence manager to be used for persisting version state.
@@ -439,7 +440,7 @@
           NOTE: The database must be pre-created in and match the parameters.  See Jackrabbit
           documentation for further explanation.
         -->
-<% if pentahobi_repository_type == 'mysql' %>
+{% if pentahobi_repository_type == 'mysql' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.MySqlPersistenceManager">
       <param name="driver" value="com.mysql.jdbc.Driver"/>
       <param name="url" value="jdbc:mysql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
@@ -448,9 +449,9 @@
       <param name="schema" value="mysql"/>
       <param name="schemaObjectPrefix" value="pm_ver_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'oracle' %>
+{% if pentahobi_repository_type == 'oracle' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.OraclePersistenceManager">
       <param name="url" value="jdbc:oracle:thin:@{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/XE"/>
       <param name="driver" value="oracle.jdbc.OracleDriver"/>
@@ -460,9 +461,9 @@
       <param name="schemaObjectPrefix" value="pm_ver_"/>
       <param name="tablespace" value="pentaho_tablespace"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'postgresql' %>
+{% if pentahobi_repository_type == 'postgresql' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.PostgreSQLPersistenceManager">
       <param name="url" value="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"/>
       <param name="driver" value="org.postgresql.Driver"/>
@@ -471,9 +472,9 @@
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="pm_ver_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'sqlserver' %>
+{% if pentahobi_repository_type == 'sqlserver' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.bundle.MSSqlPersistenceManager">
       <param name="url" value="jdbc:sqlserver://{{ pentahobi_db_host }}:{{ pentahobi_db_port }};DatabaseName={{ pentahobi_db_jcr_name }}"/>
       <param name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
@@ -482,14 +483,14 @@
       <param name="schema" value="mssql"/>
       <param name="schemaObjectPrefix" value="pm_ver_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
-<% if pentahobi_repository_type == 'filesystem' %>
+{% if pentahobi_repository_type == 'filesystem' %}
     <PersistenceManager class="org.apache.jackrabbit.core.persistence.pool.H2PersistenceManager">
       <param name="url" value="jdbc:h2:${rep.home}/version/db"/>
       <param name="schemaObjectPrefix" value="version_"/>
     </PersistenceManager>
-<% endif %>
+{% endif %}
 
   </Versioning>
 
