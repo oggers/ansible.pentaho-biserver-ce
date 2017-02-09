@@ -66,6 +66,7 @@
   with_items:
     - smtp-email/email_config.xml
     - mondrian/mondrian.properties
+    - simple-jndi/jdbc.properties
     - repository.spring.properties
     - applicationContext-spring-security.xml
     - data-access/settings.xml

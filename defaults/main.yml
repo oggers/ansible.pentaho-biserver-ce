@@ -98,6 +98,8 @@ pentahobi_db_delegate_to: "{{ pentahobi_db_host | replace('localhost', inventory
 # List of additional JNDI resources (see tomcat role for examples).
 pentahobi_jndi_resources: []
 
+pentahobi_jndi_connections: []
+
 #
 # SMTP
 #
