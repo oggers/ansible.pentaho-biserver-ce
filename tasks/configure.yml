@@ -66,7 +66,6 @@
   with_items:
     - smtp-email/email_config.xml
     - mondrian/mondrian.properties
-    - simple-jndi/jdbc.properties
     - repository.spring.properties
     - applicationContext-spring-security.xml
     - data-access/settings.xml
@@ -88,11 +87,21 @@
 
 - name: Set jndi
   template: >
-    src={{ pentahobi_version }}/tomcat/webapps/pentaho/META-INF/context.xml.j2
-    dest={{ pentahobi_tomcat_path }}/webapps/pentaho/META-INF/context.xml
+    src={{ pentahobi_version }}/tomcat/{{ item }}.j2
+    dest={{ pentahobi_tomcat_path }}/{{ item }}
     owner={{ pentahobi_user }}
     group={{ pentahobi_group }}
   notify: restart pentaho
+  with_items:
+  - webapps/pentaho/WEB-INF/web.xml
+  - webapps/pentaho/META-INF/context.xml
+  register: set_jndi
+
+- name: Delete jndi cache
+  file:
+    path: "{{ pentahobi_tomcat_path }}/conf/Catalina/directory/pentaho.xml"
+    state: absent
+  when: set_jndi.succeeded
 
 - name: Copy jdbc drivers
   copy:
