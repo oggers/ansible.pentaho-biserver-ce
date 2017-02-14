@@ -46,7 +46,7 @@
 {% endif %}
               
   {% for item in pentahobi_jndi_resources %}
-  <Resource name="{{ item.name }}" auth="Container" type="javax.sql.DataSource"
+  <Resource name="jdbc/{{ item.name }}" auth="Container" type="javax.sql.DataSource"
 		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxActive="{{ item.maxActive }}" maxIdle="{{ item.maxIdle }}"
 		maxWait="{{ item.maxWait }}" username="{{ item.user }}" password="{{ item.password }}"
 		driverClassName="{{ item.driver }}" url="{{ item.url }}"/>
