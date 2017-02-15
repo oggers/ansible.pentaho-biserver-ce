@@ -51,6 +51,6 @@
     maxWait="{{ item.maxWait }}" username="{{ item.user }}" password="{{ item.password }}"
     driverClassName="{{ item.driver }}"
     url="{{ item.url }}"
-    validationQuery="{{ item.validationQuery }}"/>
+    validationQuery="{{ item.validationQuery | default('SELECT 1') }}"/>
 {% endfor %}
 </Context>

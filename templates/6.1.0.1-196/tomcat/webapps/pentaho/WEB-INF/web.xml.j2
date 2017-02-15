@@ -27,7 +27,11 @@
     <param-name>hsqldb-databases</param-name>
     <param-value>sampledata@../../data/hsqldb/sampledata,hibernate@../../data/hsqldb/hibernate,quartz@../../data/hsqldb/quartz</param-value>
   </context-param>
-  <!-- [END HSQLDB DATABASES] -->
+  <context-param>
+    <param-name>hsqldb-port</param-name>
+    <param-value>{{ pentahobi_hypersonic_port }}</param-value> 
+  </context-param>
+<!-- [END HSQLDB DATABASES] -->
 
   <!-- insert additional context-params -->
 
@@ -546,7 +550,7 @@
 
 {% for item in pentahobi_jndi_resources %}
   <resource-ref>
-    <description>{{ item.description }}</description>
+    <description>{{ item.description | default('') }}</description>
     <res-ref-name>jdbc/{{ item.name }}</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>

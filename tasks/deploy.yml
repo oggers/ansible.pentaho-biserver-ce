@@ -13,11 +13,11 @@
 - name: fetch package
   get_url: >
     url={{ pentahobi_pkg_url }}
-    dest={{ _tmp.path }}/{{ pentahobi_pkg_url | basename }}
+    dest=/tmp/{{ pentahobi_pkg_url | basename }}
 
 - name: unpack package to temp directory
   #unarchive: src="/root/{{ pentahobi_pkg_url | basename }}" dest="{{ _tmp.path }}" copy=no
-  unarchive: src={{ _tmp.path }}/{{ pentahobi_pkg_url | basename }} dest={{ _tmp.path }} copy=no
+  unarchive: src=/tmp/{{ pentahobi_pkg_url | basename }} dest={{ _tmp.path }} copy=no
   # using unzip instead of unarchivoe due to a bug in ansible 2.1.0.0 related to uncompressing files with spaces in their name
   #command: unzip "{{ _tmp.path }}/{{ pentahobi_pkg_url | basename }} -d {{ _tmp.path }}"
   #command: unzip "/root/{{ pentahobi_pkg_url | basename }}" -d "{{ _tmp.path }}"
@@ -33,7 +33,7 @@
   patch: >
     src={{ _tmp.path }}/PUCLogin.jsp.patch
     remote_src=True
-    dest={{ _tmp.path }}/{{ pentahobi_extract_dir }}/tomcat/webapps/pentaho/jsp/PUCLogin.jsp
+    dest={{ _tmp.path }}/{{ pentahobi_extract_dir[pentahobi_version] }}/tomcat/webapps/pentaho/jsp/PUCLogin.jsp
 
 #- name: patch pentaho-spring-beans.xml to remove useless imports
 #  patch: >
@@ -85,7 +85,7 @@
 
 - name: copy pentaho-solutions directory
   command: >
-    mv {{ _tmp.path }}/{{ pentahobi_extract_dir }} {{ pentahobi_base_dir }}/
+    mv {{ _tmp.path }}/{{ pentahobi_extract_dir[pentahobi_version] }} {{ pentahobi_base_dir }}
 
 - name: fix files permissions
   file: >

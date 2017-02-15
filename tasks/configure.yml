@@ -46,6 +46,20 @@
   - hibernate/hsql.hibernate.cfg.xml
   notify: restart pentaho
 
+- name: Config hypersonic
+  template: >
+    src={{ pentahobi_version }}/{{ item }}.j2
+    dest={{ pentahobi_base_dir }}/{{ item }}
+    owner={{ pentahobi_user }}
+    group={{ pentahobi_group }}
+  with_items:
+  - data/start_hypersonic.bat
+  - data/start_hypersonic.sh
+  - data/stop_hypersonic.bat
+  - data/stop_hypersonic.sh
+  - data/hsqldb/hibernate.script
+  notify: restart pentaho
+
 # - name: copy configuration files
 #   copy: >
 #     src=system/{{ item }}
@@ -67,11 +81,24 @@
     - smtp-email/email_config.xml
     - mondrian/mondrian.properties
     - repository.spring.properties
-    - applicationContext-spring-security.xml
+    - applicationContext-spring-security-hibernate.properties
+    - pentaho.xml
     - data-access/settings.xml
     - ImportHandlerMimeTypeDefinitions.xml
     - importExport.xml
     - security.properties
+    - GettingStartedDB.properties
+    - cda/sample-kettle-ParamArray.ktr
+    - cda/solution/bi-developers/cda/cdafiles/olap4j.cda
+    - dialects/hsqldb/applicationContext-spring-security-hibernate.properties
+    # only for version 6.1.0.1-196
+    #- kettle/plugins/jobs/hadoop/wordcount-reducer.ktr
+    #- kettle/plugins/jobs/hadoop/Hadoop Job Executor adv.kjb
+    #- kettle/plugins/jobs/hadoop/wordcount-mapper.ktr
+    #- kettle/plugins/jobs/hadoop/weblogs-mapper.ktr
+    #- kettle/plugins/jobs/hadoop/pentaho-mapreduce-sample-src/src/org/pentaho/hadoop/sample/wordcount/WordCount.java
+    #- kettle/plugins/jobs/hadoop/pentaho-mapreduce-sample-src/README.TXT
+    #- kettle/plugins/jobs/hadoop/weblogs-reducer.ktr
   notify: restart pentaho
 
 - name: Copy ldap configuration files
@@ -101,7 +128,7 @@
   file:
     path: "{{ pentahobi_tomcat_path }}/conf/Catalina/directory/pentaho.xml"
     state: absent
-  when: set_jndi.succeeded
+  when: set_jndi|succeeded
 
 - name: Copy jdbc drivers
   copy:

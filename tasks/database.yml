@@ -29,7 +29,7 @@
   when: pentahobi_repository_type == 'postgresql'
 
 - name: copy quartz file
-  template: src=quartz_init.pg.sql.j2 dest=/tmp/quartz_init.pg.sql
+  template: src="{{ pentahobi_version }}/quartz_init.pg.sql.j2" dest=/tmp/quartz_init.pg.sql
   when: createdb_result | changed
 
 - name: initialize database for quartz

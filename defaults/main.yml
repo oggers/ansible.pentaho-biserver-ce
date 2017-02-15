@@ -27,8 +27,12 @@ pentahobi_user: pentaho
 pentahobi_group: "{{ pentahobi_user }}"
 
 # Port number for Tomcat to listen on.
-pentahobi_http_port: 8080
-
+pentahobi_tomcat_http_port: 8080
+pentahobi_tomcat_shutdown_port: 8005
+pentahobi_tomcat_ajp_port: 8009
+pentahobi_tomcat_ssl_port: 8443
+pentahobi_hypersonic_port: 9001
+pentahobi_gettingstarted_port: 9092
 
 # Path of the base directory to install into.
 pentahobi_base_dir: "/opt/{{ pentahobi_name }}"
