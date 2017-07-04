@@ -25,7 +25,11 @@
   <!-- [BEGIN HSQLDB DATABASES] -->
   <context-param>
     <param-name>hsqldb-databases</param-name>
+{% if pentaho_repository_type == 'filesystem' %}
     <param-value>sampledata@../../data/hsqldb/sampledata,hibernate@../../data/hsqldb/hibernate,quartz@../../data/hsqldb/quartz</param-value>
+{% else %}
+    <param-value>sampledata@../../data/hsqldb/sampledata</param-value>
+{% endif %}
   </context-param>
   <context-param>
     <param-name>hsqldb-port</param-name>
