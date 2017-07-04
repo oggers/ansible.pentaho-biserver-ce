@@ -5,7 +5,7 @@ galaxy_info:
   company:
   description: Deploy Pentaho BI server CE.
   license: MIT
-  min_ansible_version: 1.8
+  min_ansible_version: 2.2.2.0
   platforms:
     - name: Ubuntu
   categories:

@@ -47,5 +47,5 @@
   register: pentaho_systemd
     
 - name: enable systemd
-  command: systemctl enable /lib/systemd/system/pentaho.service
+  command: systemctl enable /lib/systemd/system/pentaho-{{ pentahobi_major_version }}.service
   when: pentaho_systemd.changed

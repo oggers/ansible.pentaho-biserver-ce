@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Pentaho BI Server
+After=syslog.target
+After=network.target
+After=postgresql.service
+
+[Service]
+Type=forking
+User=pentaho
+Group=pentaho
+ExecStart={{ pentahobi_base_dir }}/start-pentaho.sh
+ExecStartPost=/bin/echo pentaho...end of unitfile 
+
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

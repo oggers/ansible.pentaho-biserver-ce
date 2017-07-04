@@ -2,7 +2,8 @@
 # file: pentaho.biserver/defaults/main.yml
 
 # Version to install.
-pentahobi_version: 7.0.0.0-25
+pentahobi_version: 7.1.0.0-12
+#pentahobi_version: 7.0.0.0-25
 #pentahobi_version: 6.1.0.1-196
 
 pentahobi_major_version: "{{ '.'.join(pentahobi_version.split('.')[0:2]) }}"
@@ -10,12 +11,14 @@ pentahobi_major_version: "{{ '.'.join(pentahobi_version.split('.')[0:2]) }}"
 # URL of the distribution package to download.
 pentahobi_pkg_url_version: {
   "6.1.0.1-196": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/6.1/biserver-ce-6.1.0.1-196.zip",
-  "7.0.0.0-25": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/7.0/pentaho-server-ce-7.0.0.0-25.zip"}
+  "7.0.0.0-25": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/7.0/pentaho-server-ce-7.0.0.0-25.zip",
+  "7.1.0.0-12": "https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/7.1/pentaho-server-ce-7.1.0.0-12.zip"}
 pentahobi_pkg_url: "{{ pentahobi_pkg_url_version[pentahobi_version] }}"
 
 pentahobi_extract_dir: {
   "6.1.0.1-196": "biserver-ce",
-  "7.0.0.0-25": "pentaho-server"}
+  "7.0.0.0-25": "pentaho-server",
+  "7.1.0.0-12": "pentaho-server"}
 
 # Name of this Pentaho BI instance.
 pentahobi_name: "pentaho-bi-{{ pentahobi_major_version }}"

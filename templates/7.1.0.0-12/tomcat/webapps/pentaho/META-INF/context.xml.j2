@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- {{ ansible_managed }} -->
+<Context path="/pentaho" docbase="webapps/pentaho/">
+{% if pentahobi_repository_type == 'filesystem' %}
+	<Resource name="jdbc/Hibernate" auth="Container" type="javax.sql.DataSource"
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxTotal="20" maxIdle="5"
+		maxWaitMillis="10000" username="hibuser" password="password"
+		driverClassName="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:hsql://localhost/hibernate"
+		validationQuery="select count(*) from INFORMATION_SCHEMA.SYSTEM_SEQUENCES" />
+		
+	<Resource name="jdbc/Quartz" auth="Container" type="javax.sql.DataSource"
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxTotal="20" maxIdle="5"
+		maxWaitMillis="10000" username="pentaho_user" password="password"
+		driverClassName="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:hsql://localhost/quartz"
+		validationQuery="select count(*) from INFORMATION_SCHEMA.SYSTEM_SEQUENCES"/>
+{% endif %}
+
+{% if pentahobi_repository_type == 'postgresql' %}
+  <Resource name="jdbc/Hibernate" auth="Container" type="javax.sql.DataSource"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxActive="20" maxIdle="5"
+    maxWait="10000" username="{{ pentahobi_db_user }}" password="{{ pentahobi_db_pass }}"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_hib_name }}"
+    validationQuery="select 1"/>
+
+  <Resource name="jdbc/Jackrabbit" auth="Container" type="javax.sql.DataSource"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxActive="20" maxIdle="5"
+    maxWait="10000" username="{{ pentahobi_db_user }}" password="{{ pentahobi_db_pass }}"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_jcr_name }}"
+    validationQuery="select 1"/>
+
+  <Resource name="jdbc/Audit" auth="Container" type="javax.sql.DataSource"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxActive="20" maxIdle="5"
+    maxWait="10000" username="{{ pentahobi_db_user }}" password="{{ pentahobi_db_pass }}"
+    driverclassname="org.postgresql.Driver"
+    url="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_hib_name }}"
+    validationquery="select 1"/>
+     
+  <Resource name="jdbc/Quartz" auth="Container" type="javax.sql.DataSource"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxActive="20" maxIdle="5"
+    maxWait="10000" username="{{ pentahobi_db_user }}" password="{{ pentahobi_db_pass }}"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://{{ pentahobi_db_host }}:{{ pentahobi_db_port }}/{{ pentahobi_db_qrtz_name }}"
+    validationQuery="select 1"/>
+{% endif %}
+
+{% for item in pentahobi_jndi_resources %}
+  <Resource name="jdbc/{{ item.name }}" auth="Container" type="javax.sql.DataSource"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory" maxActive="{{ item.maxActive }}" maxIdle="{{ item.maxIdle }}"
+    maxWait="{{ item.maxWait }}" username="{{ item.user }}" password="{{ item.password }}"
+    driverClassName="{{ item.driver }}"
+    url="{{ item.url }}"
+    validationQuery="{{ item.validationQuery | default('SELECT 1') }}"/>
+{% endfor %}
+</Context>
