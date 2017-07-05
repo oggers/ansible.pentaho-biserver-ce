@@ -192,6 +192,11 @@
 							<value>xanalyzer</value>
 							<value>wcdf</value>
 							<value>xcdf</value>
+{% for mimeTypeDef in pentahobi_repository_file_import_extensions|default([]) %}
+{% for ext in mimeTypeDef.extensions %}
+              <value>{{ ext }}</value>
+{% endfor %}
+{% endfor %}
 						</list>
 					</constructor-arg>
 					<property name="repository" ref="unifiedRepository" />
